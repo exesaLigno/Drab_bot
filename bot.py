@@ -3,8 +3,18 @@ import requests
 import vk_api
 import re
 import datetime
+import random
 from random import randint
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+
+#########################################
+# TODO 	get and set database			#
+# 		chatbot manager					#
+#########################################
+
+
+intro_message = "Привет"
+help_message = "Типа помощь"
 
 
 settings = open("bot_settings.txt", "r", encoding="UTF-8").read()
@@ -17,6 +27,7 @@ ACCEPT_LEVEL = float(re.findall(r"accept_level *= *([0-9.,]*)[ ,\t]*[\n,#]", set
 
 
 DATABASE = 0
+FACTS = 0
 
 CONTEXT = {}
 UNANSWERED = {}
@@ -51,9 +62,12 @@ def writeMsg(peer_id, message, keyboard = "", keyboard_prepared = False):
 
 def readDatabase(filename):
 	global DATABASE
+	global FACTS
 	db_file = open(filename, "r", encoding = "UTF-8")
 	DATABASE = db_file.read()
+	FACTS = re.findall(r"FACT: (.*)\n", DATABASE)
 	DATABASE = re.findall(r"Q: (.*)\nA: (.*)\n", DATABASE)
+	
 	
 	
 	
@@ -81,15 +95,28 @@ def makeResponce(peer_id, text, event):
 	if peer_id < 2000000000:
 		if peer_id in CONTEXT:
 			if text.lower() == "да":
-				answer = "Отлично, можете задать еще вопросы"
+				answer = "Отлично, можете задать еще вопросы или узнать интересные факты о факультете."
+				keyboard = "default_inline.json"
 				CONTEXT.pop(peer_id)
 			elif text.lower() == "нет":
 				answer = "Хорошо, я переслал вопрос модераторам и они ответят в ближайшее время.\nА пока вы можете задать еще вопросы или узнать интересные факты о факультете."
+				keyboard = "default_inline.json"
 				callModers(CONTEXT[peer_id], peer_id)
 				CONTEXT.pop(peer_id)
 			else:
 				CONTEXT.pop(peer_id)
 				makeResponce(peer_id, text, event)
+				
+		elif text.lower() == "начать" or text.lower() == "start":
+			answer = intro_message
+			keyboard = "default.json"
+			
+		elif text.lower() == "помощь" or text.lower() == "help":
+			answer = help_message
+			
+		elif text.lower() == "факты" or text.lower() == "facts" or text.lower() == "ещё факты":
+			answer = "Факт:\n" + random.choice(FACTS)
+			keyboard = "fact_inline.json"
 				
 		else:
 			CONTEXT[peer_id] = text
@@ -102,20 +129,21 @@ def makeResponce(peer_id, text, event):
 				answer = "Схожие вопросы:\n\n" + answer + "Вам помогла данная информация?"
 				keyboard = "sucess_answer.json"
 			else:
-				answer = "Похоже, в базе данных нет ответа на этот вопрос, я переадресую его модераторам и они ответят вам в ближайшее время"
+				answer = "Похоже, в базе данных нет ответа на этот вопрос, я переадресую его модераторам и они ответят вам в ближайшее время. Можете пока узнать интересные факты о факультете."
+				keyboard = "default_inline.json"
 				callModers(text, peer_id)
 				
 	else:
 		if "reply_message" in event.object.message:
 			reply_to = event.object.message["reply_message"]
 			if reply_to["from_id"] == -public_id:
-				if text.lower() in ["\ignore", "игнор", "ignore"]:
+				if text.lower() in ["\ignore", "игнор", "ignore", "/ignore"]:
 					writeMsg(UNANSWERED[(reply_to["text"]).split("\n")[1]], "⚠ Модератор счел вопрос неуместным и/или не относящимся к факультету")
 					UNANSWERED.pop((reply_to["text"]).split("\n")[1])
 					answer = "Вопрос проигнорирован."
 				
 				else:
-					writeMsg(UNANSWERED[(reply_to["text"]).split("\n")[1]], "⚠ Ответ модератора " + whoIs(event.object.message["from_id"]) + ":\n" + text)
+					writeMsg(UNANSWERED[(reply_to["text"]).split("\n")[1]], "⚠ Ответ модератора " + whoIs(event.object.message["from_id"]) + ":\n\nВ: " + (reply_to["text"]).split("\n")[1] + "\nО: " + text)
 					DATABASE += [((reply_to["text"]).split("\n")[1], text)]
 					writeDatabase(DB_NAME)
 					UNANSWERED.pop((reply_to["text"]).split("\n")[1])
