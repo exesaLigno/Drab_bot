@@ -1,0 +1,20 @@
+{
+  "inline": false,
+  "one_time": false,
+  "buttons": [
+    [{
+      "action": {
+        "type": "text",
+        "label": "Факты"
+      },
+      "color": "default"
+    },
+    {
+      "action": {
+        "type": "text",
+        "label": "Помощь"
+      },
+      "color": "default"
+    }]
+  ]
+}

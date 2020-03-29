@@ -1,0 +1,13 @@
+{
+  "inline": true,
+  "one_time": false,
+  "buttons": [
+    [{
+      "action": {
+        "type": "text",
+        "label": "Ещё факты"
+      },
+      "color": "default"
+    }]
+  ]
+}
