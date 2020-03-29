@@ -1,4 +1,4 @@
-# DREC DRAB chat bot_longpoll
+# DREC DRAB chat bot
 
 ## Using
 Chatbot receiving messages in public dialogues and trying to search similar question in database.
@@ -38,7 +38,7 @@ database_file = <name of database file>
 accept_level = <level of coincedence of strings to consider them the same (float number between 0 and 1)>
 ```
 
-### Gedding data for configurating
+### Getting data for configurating
 #### Token
 You need to open public settings (section "Work with API") and push button "Create key".
 After that you need to mark all points in list below. The string you will receive is token.
