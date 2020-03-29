@@ -47,14 +47,15 @@ def writeMsg(peer_id, message, keyboard = "", keyboard_prepared = False):
             answ = vk_api.messages.send(peer_id=peer_id, message=message, random_id=randint(0, 999999999))
         if message != "" and keyboard != "":
         	if not keyboard_prepared:
-        		answ = vk_api.messages.send(peer_id=peer_id, message=message, keyboard=open(keyboard, "r", encoding="UTF-8").read(), random_id=randint(0, 999999999))
+        		answ = vk_api.messages.send(peer_id=peer_id, message=message, keyboard=open("keyboards/" + keyboard, "r", encoding="UTF-8").read(), random_id=randint(0, 999999999))
         	else:
         		answ = vk_api.messages.send(peer_id=peer_id, message=message, keyboard=keyboard, random_id=randint(0, 999999999))
         else:
         	answ = -2
         return answ
-    except:
+    except Exception as error:
         makeLog("failed sending \"" + message + "\" to " + str(peer_id))
+        makeLog(error)
         return -1
 
 
