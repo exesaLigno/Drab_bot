@@ -1,3 +1,4 @@
 *.log
 qa_database.txt
 *.ignore
+*.service
