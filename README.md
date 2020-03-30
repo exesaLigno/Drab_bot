@@ -43,7 +43,10 @@ accept_level = <level of coincedence of strings to consider them the same (float
 ### Getting data for configurating
 #### Token
 You need to open public settings (section "Work with API") and push button "Create key".
-After that you need to mark all points in list below. The string you will receive is token.
+After that you need to enable access to *public messages* in list below. The string you will receive is token.
+![alt-текст][token1]
+![alt-текст][token2]
+
 
 #### Setting up public API
 At the same section you need to choose tab *"Long Poll API"* and on this tab choose
@@ -51,8 +54,12 @@ At the same section you need to choose tab *"Long Poll API"* and on this tab cho
 Long Poll API: Enabled
 API version: 5.103
 ```
+![alt-текст][longpoll1]
 
-In subsection named "Event types" you need to choose all points you need (Recommended to select all)
+In subsection named "Event types" you need to choose all points you need. 
+Recommended to select *"Incoming messages"* and *"Outgoing messages"* 
+(If you have another chat bot, you need to mark also points required for this bot)
+![alt-текст][longpoll2]
 
 #### Searching for moderators chat ID
 ID of moderators chat is number is equal to the ordinal number in which the chat bot was added to the conversation.
@@ -61,7 +68,10 @@ You can find it randomly (Starting from 1 and increasing it until it works)
 #### Accept level
 It is the float number between 0 and 1. If strings much more than accept level, they are considered matching.
 
-
+[token1]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/token1.png "Create key"
+[token2]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/token2.png "Allow access to public messages"
+[longpoll1]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/longpoll1.png "Configurating Long Poll"
+[longpoll2]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/longpoll2.png "Configurating Long Poll event types"
 
 
 
