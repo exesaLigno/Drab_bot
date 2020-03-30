@@ -66,8 +66,8 @@ def readDatabase(filename):
 	global FACTS
 	db_file = open(filename, "r", encoding = "UTF-8")
 	DATABASE = db_file.read()
-	FACTS = re.findall(r"FACT: (.*)\n", DATABASE)
-	DATABASE = re.findall(r"Q: (.*)\nA: (.*)\n", DATABASE)
+	FACTS = re.findall(r"FACT: <([^<>]*)>\n", DATABASE)
+	DATABASE = re.findall(r"Q: <([^<>]*)>\nA: <([^<>]*)>\n", DATABASE)
 	
 	
 	
@@ -75,8 +75,8 @@ def readDatabase(filename):
 def writeDatabase(filename):
 	db_file = open(filename, "w", encoding = "UTF-8")
 	for couple in DATABASE:
-		db_file.write("Q: " + couple[0].capitalize() + "\n")
-		db_file.write("A: " + couple[1].capitalize() + "\n\n")
+		db_file.write("Q: <" + couple[0] + ">\n")
+		db_file.write("A: <" + couple[1] + ">\n\n")
 	db_file.close()
 	
 	
@@ -139,15 +139,15 @@ def makeResponce(peer_id, text, event):
 			reply_to = event.object.message["reply_message"]
 			if reply_to["from_id"] == -public_id:
 				if text.lower() in ["\ignore", "игнор", "ignore", "/ignore"]:
-					writeMsg(UNANSWERED[(reply_to["text"]).split("\n")[1]], "⚠ Модератор счел вопрос неуместным и/или не относящимся к факультету")
-					UNANSWERED.pop((reply_to["text"]).split("\n")[1])
+					writeMsg(UNANSWERED[re.findall(r"Вопрос от абитуриента.*\n([^<>]*)", reply_to["text"])[0]], "⚠ Модератор счел вопрос неуместным и/или не относящимся к факультету")
+					UNANSWERED.pop(re.findall(r"Вопрос от абитуриента.*\n([^<>]*)", reply_to["text"])[0])
 					answer = "Вопрос проигнорирован."
 				
 				else:
-					writeMsg(UNANSWERED[(reply_to["text"]).split("\n")[1]], "⚠ Ответ модератора " + whoIs(event.object.message["from_id"]) + ":\n\nВ: " + (reply_to["text"]).split("\n")[1] + "\nО: " + text)
-					DATABASE += [((reply_to["text"]).split("\n")[1], text)]
+					writeMsg(UNANSWERED[re.findall(r"Вопрос от абитуриента.*\n([^<>]*)", reply_to["text"])[0]], "⚠ Ответ модератора " + whoIs(event.object.message["from_id"]) + ":\n\nВ: " + re.findall(r"Вопрос от абитуриента.*\n([^<>]*)", reply_to["text"])[0] + "\nО: " + text)
+					DATABASE += [(re.findall(r"Вопрос от абитуриента.*\n([^<>]*)", reply_to["text"])[0], text)]
 					writeDatabase(DB_NAME)
-					UNANSWERED.pop((reply_to["text"]).split("\n")[1])
+					UNANSWERED.pop(re.findall(r"Вопрос от абитуриента.*\n([^<>]*)", reply_to["text"])[0])
 					answer = "Ответ на вопрос выслан абитуриенту и занесен в базу."
 			
 	writeMsg(peer_id, answer, keyboard)
