@@ -68,10 +68,10 @@ You can find it randomly (Starting from 1 and increasing it until it works)
 #### Accept level
 It is the float number between 0 and 1. If strings much more than accept level, they are considered matching.
 
-[token1]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/token1.png "Create key"
-[token2]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/token2.png "Allow access to public messages"
-[longpoll1]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/longpoll1.png "Configurating Long Poll"
-[longpoll2]: https://github.com/exesaLigno/Mipt/raw/master/README_pictures/longpoll2.png "Configurating Long Poll event types"
+[token1]: https://github.com/exesaLigno/Mipt/blob/master/README_pictures/token1.png "Create key"
+[token2]: https://github.com/exesaLigno/Mipt/blob/master/README_pictures/token2.png "Allow access to public messages"
+[longpoll1]: https://github.com/exesaLigno/Mipt/blob/master/README_pictures/longpoll1.png "Configurating Long Poll"
+[longpoll2]: https://github.com/exesaLigno/Mipt/blob/master/README_pictures/longpoll2.png "Configurating Long Poll event types"
 
 
 
