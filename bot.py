@@ -77,6 +77,8 @@ def writeDatabase(filename):
 	for couple in DATABASE:
 		db_file.write("Q: <" + couple[0] + ">\n")
 		db_file.write("A: <" + couple[1] + ">\n\n")
+	for fact in FACTS:
+		db_file.write("FACT: <" + fact + ">\n")
 	db_file.close()
 	
 	
