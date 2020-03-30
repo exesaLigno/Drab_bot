@@ -6,7 +6,6 @@ If question not found in database, bot forwards question to moderators chat.
 
 * To answer question, moderator must **reply to forwarded question**. Answer will be forwarded to enrolee and added to database.
 * If question inappropriate, moderator can reply with text **"/ignore"** and question will be ignored.
-* Also moderator can get .txt file with database with command **"/getdb"** and send new database file with command **"/setdb"** with attached .txt file with questions.
 
 ## Setting up
 
@@ -22,12 +21,15 @@ python3 bot.py
 Or you can use chatbot manager **(NOT IMPLEMENTED)**
 
 ### Configurating bot
-First of all you need make database file like that (without '<', '>')
+First of all you need make database file like that **(symbols '<', '>' are required!)**. You can add Q&A couples and facts.
 ```
 Q: <question>
 A: <answer>
 
-Q: ....
+Q: ...
+
+FACT: <fact>
+FACT: ...
 ```
 After that you need to configure *bot_settings.txt* (without '<', '>')
 ```
