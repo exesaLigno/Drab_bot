@@ -31,7 +31,7 @@ Q: ...
 FACT: <fact>
 FACT: ...
 ```
-After that you need to configure *bot_settings.txt* (without '<', '>')
+After that you need to configure *bot_settings.txt* **(without '<', '>')**
 ```
 public_id = <public id (without word 'public', just number)>
 token = <public token>
